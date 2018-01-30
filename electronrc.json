@@ -3,7 +3,7 @@
   "productName": "Remind Me",
   "copyright": "Copyright © 2018 Max Zhuravsky",
   "files": [
-    "**/*", "!styles/**", "!icons/**", "!dist/**", "!Gulpfile.js", "!TODO.md", "!docs/**"
+    "**/*", "!styles/**", "!.sass-cache/**", "!icons/**", "!source/renderer/**", "!dist/**", "!Gulpfile.js", "!docs/**", "!.eslintrc.js"
   ],
   "mac": {
     "category": "public.app-category.productivity",

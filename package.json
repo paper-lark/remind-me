@@ -1,11 +1,12 @@
 {
   "name": "remind-me",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplistic cross-platform note tracker",
   "main": "./source/main/main.js",
   "scripts": {
     "start": "yarn run electron .",
     "watch": "yarn run gulp watch",
+    "prebuild": "yarn run gulp",
     "build:test": "yarn run electron-builder --dir --config electronrc.json",
     "build:mac": "yarn run electron-builder --config electronrc.json --mac",
     "build:windows": "yarn run electron-builder --config electronrc.json --win",
@@ -19,10 +20,10 @@
     "electron": "^1.7.10",
     "electron-builder": "^19.54.0",
     "gulp": "^3.9.1",
-    "gulp-ruby-sass": "^3.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-ruby-sass": "^3.0.0",
     "icon-gen": "^1.2.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

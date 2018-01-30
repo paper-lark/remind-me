@@ -5,6 +5,7 @@
  * Converts DOM reminders into text and text to entries.
  */
 
+/* Function converts node reminder into text */
 function toText(node) {
   let main = node.querySelector('.entry');
   let subs = node.querySelectorAll('.sub-entry');
@@ -38,6 +39,7 @@ function toText(node) {
   return result;
 }
 
+/* Function trims spaces in the string */
 function trim(str) {
   let exp = /^\s*(\S.*\S)\s*$/g;
   let result = exp.exec(str);
@@ -48,27 +50,36 @@ function trim(str) {
   }
 }
 
+/* Function converts text into an entry */
 function toEntry(text) {
   let lines = text
     .split('\n')
     .map(line => trim(line))
     .filter(line => line !== '');
-  let main = lines[0];
+  if (lines.length === 0) {
+    throw new Error('Reminder deleted');
+  } else if (lines.length < 2) {
+    throw new Error('Invalid reminder format');
+  }
+  let main = trim(lines[0]);
   let subs = lines.slice(1, lines.length - 1);
   let footer = lines[lines.length - 1];
 
+  if (main[0] !== '+' && main[0] !== '-') {
+    throw new Error('Tasks should start with +/-');
+  }
+
   let entry = {
-    task: trim(main.slice(2)),
+    task: trim(main.slice(1)),
     completed: main[0] === '+',
-    subtasks: [],
-    color: '#0091EA'
+    subtasks: []
   };
   if (entry.task.length === 0) {
     throw new Error('No description for a task was specified');
   }
 
   let split = footer.split('-');
-  entry.tag = trim(split[0]);
+  entry.tag = trim(split[0]).toLowerCase();
   if (entry.tag.length === 0) {
     throw new Error('No tag specified');
   }
@@ -85,8 +96,12 @@ function toEntry(text) {
   }
 
   subs.forEach(line => {
+    line = trim(line);
+    if (line[0] !== '+' && line[0] !== '-') {
+      throw new Error('Tasks should start with +/-');
+    }
     let item = {
-      content: trim(line.slice(2)),
+      content: trim(line.slice(1)),
       completed: line[0] === '+'
     };
     if (item.content.length === 0) {
@@ -98,6 +113,7 @@ function toEntry(text) {
   return entry;
 }
 
+/* Module object */
 const convert = {
   toText: toText,
   toEntry: toEntry

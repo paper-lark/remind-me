@@ -11,17 +11,23 @@ const ipc = IPCHandlerFactory();
 let openedTab = 'ongoing';
 let edited = undefined;
 let colors = undefined;
-let nextID = 1; //DEBUG: missing IDs
+let nextID = 1;
 
 /* Elements */
 let container = document.querySelector('.scrollable-container');
-let entries = document.querySelectorAll('.entry-container'); //TODO make live
+let entries = document.getElementsByClassName('entry-container');
 let tabs = document.querySelectorAll('.tab');
 let filter = document.querySelector('#filter');
 let floating = document.querySelector('.floating');
 let current = document.querySelectorAll(
   `.entry-container[data-type='${openedTab}']`
-); //TODO make live
+);
+
+/* Function resolves color using default in case the tag is not specified in the color scheme */
+function resolveColor(tag) {
+  const def = '#00C853';
+  return colors[tag] ? colors[tag] : def;
+}
 
 /* Function creates a DOM element for a reminder with handlers attached */
 function createReminder(entry) {
@@ -38,7 +44,6 @@ function createReminder(entry) {
 function createList(reminders) {
   container.innerHTML = '';
   reminders.forEach(entry => container.appendChild(createReminder(entry)));
-  entries = document.querySelectorAll('.entry-container');
   openTab(openedTab);
 }
 
@@ -55,8 +60,14 @@ function openTab(title) {
     });
   }
 
-  current = document.querySelectorAll(`.entry-container[data-type='${title}']`);
-  entries.forEach(entry => (entry.style.display = 'none'));
+  current = Array.prototype.filter.call(
+    entries,
+    entry => entry.getAttribute('data-type') === title
+  );
+  Array.prototype.forEach.call(
+    entries,
+    entry => (entry.style.display = 'none')
+  );
   current.forEach(entry => (entry.style.display = ''));
   handlers.filterInput();
 }
@@ -73,12 +84,9 @@ function EventHanderFactory() {
     if (edited != undefined) {
       try {
         let entry = convert.toEntry(edited.innerHTML);
-        if (colors[entry.tag]) {
-          entry.color = colors[entry.tag];
-        }
+        entry.color = resolveColor(entry.tag);
         this.contentEditable = 'false';
         edited.parentNode.replaceChild(createReminder(entry), edited);
-        entries = document.querySelectorAll('.entry-container');
         openTab(openedTab);
         notify({
           type: 'success',
@@ -90,6 +98,10 @@ function EventHanderFactory() {
           type: 'error',
           message: err.message
         });
+        if (err.message === 'Reminder deleted') {
+          edited.parentNode.removeChild(edited);
+          openTab(openedTab);
+        }
       }
     }
     if (edited === this) {
@@ -136,7 +148,6 @@ function EventHanderFactory() {
         /* Move to ongoing */
         container.setAttribute('data-type', 'ongoing');
       }
-      entries = document.querySelectorAll('.entry-container');
       openTab(openedTab);
     }
   }
@@ -171,7 +182,6 @@ function EventHanderFactory() {
     let reminder = createReminder(options);
     container.appendChild(reminder);
     entryClick.call(reminder, undefined);
-    entries = document.querySelectorAll('.entry-container');
     openTab('unscheduled');
   }
 
@@ -194,7 +204,7 @@ function IPCHandlerFactory() {
       let list = args.list;
       colors = args.colors;
       list.forEach(reminder => {
-        reminder.color = colors[reminder.tag];
+        reminder.color = resolveColor(reminder.tag);
         if (reminder.scheduled) {
           reminder.date = new Date(reminder.date);
         }
@@ -249,7 +259,7 @@ function IPCHandlerFactory() {
     }
 
     let list = [];
-    entries.forEach(entry => {
+    Array.prototype.forEach.call(entries, entry => {
       list.push(serialize(entry));
     });
     ipcRenderer.send('save', list);
@@ -257,7 +267,11 @@ function IPCHandlerFactory() {
 
   /* Function sends a notification about the given DOM reminder */
   function remind(el) {
-    let content = el.querySelector('.entry .content').textContent;
+    let inner = el.querySelector('.entry .content');
+    if (inner == undefined) {
+      throw new Error('Scheduled reminder is being edited');
+    }
+    let content = inner.textContent;
     let id = el.getAttribute('data-id');
     ipcRenderer.send('remind', {
       content: content,
@@ -270,7 +284,7 @@ function IPCHandlerFactory() {
     console.log(`> scrolling #${id} into view`);
     //TODO scroll into view
     let reminder = undefined;
-    entries.forEach(entry => {
+    Array.prototype.forEach.call(entries, entry => {
       if (entry.getAttribute('data-id') === id) {
         console.log('found!');
         reminder = entry;
@@ -312,13 +326,20 @@ function checkRoutine() {
     console.log('> check...');
     let current = new Date(Date.now());
     let previous = new Date(Date.now() - interval);
-    entries.forEach(reminder => {
+    Array.prototype.forEach.call(entries, reminder => {
       if (reminder.getAttribute('data-type') === 'ongoing') {
         let date = new Date(reminder.getAttribute('data-time'));
         if (date > previous && date <= current) {
           console.log('> caught!');
-          reminder.setAttribute('data-type', 'expired');
-          ipc.remind(reminder);
+          try {
+            ipc.remind(reminder);
+            reminder.setAttribute('data-type', 'expired');
+          } catch (err) {
+            notify({
+              type: 'warning',
+              message: err.message
+            });
+          }
         }
       }
     });

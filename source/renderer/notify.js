@@ -5,8 +5,10 @@
  * Module handles notifications.
  */
 
+/* Notification tray */
 let element = document.querySelector('.notification');
 
+/* Function creates an in-app notification */
 function notify(notification) {
   element.className = `notification ${notification.type}`;
   element.innerHTML = notification.message;

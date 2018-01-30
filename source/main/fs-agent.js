@@ -73,7 +73,7 @@ function create(callback) {
     }
   ];
   save(list, () => {
-    console.log('> sample list created');
+    console.log('> new sample list created');
     callback(list);
   });
 }
@@ -86,8 +86,6 @@ function fetch(callback) {
   const pathname = resolve();
   fs.readFile(path.join(pathname, filename), (err, data) => {
     if (err) {
-      console.error('error on fetch()');
-      console.error(err);
       if (err.code === 'ENOENT') {
         /* Create sample list */
         create(callback);
@@ -129,10 +127,21 @@ function save(list, callback) {
  */
 function fetchColors() {
   const pathname = resolve();
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     let file = path.join(pathname, colorname);
     if (!fs.existsSync(file)) {
-      reject(new Error('color profile does not exist'));
+      let data = {
+        home: '#AA00FF',
+        work: '#FF6D00',
+        personal: '#388E3C',
+        project: '#0091EA'
+      };
+      fs.writeFileSync(file, JSON.stringify(data), {
+        encoding: 'utf-8',
+        mode: 0o640
+      });
+      console.log('> new color profile created');
+      resolve(data);
     } else {
       let raw = fs.readFileSync(file, { encoding: 'utf8' });
       let data = JSON.parse(raw);

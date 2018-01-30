@@ -9,9 +9,5 @@
 * Trim notes before saving them
 
 * New design
-  - Completed notes are deleted over time
-  - Notification on time
-  - Scroll shadows
-  - Frameless window warning
-  - Colors on new reminders
-  - Delete empty notes
+  - Move reminders to the main process
+  - Schedule reminders on the main process

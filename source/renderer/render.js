@@ -6,10 +6,12 @@
  * Render DOM reminders from entries.
  */
 
+/* Function capitalizes the first letter of the string */
 function capitalize(str) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
+/* Function creates a text representation of the time object */
 function generateTime(date) {
   let hour = date.getHours();
   let minute = date.getMinutes();
@@ -37,6 +39,7 @@ function generateTime(date) {
   }
 }
 
+/* Function renders a reminder element based on the entry info */
 function render(entry) {
   console.dir(entry);
   let el = document.createElement('div');

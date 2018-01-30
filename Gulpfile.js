@@ -2,6 +2,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-ruby-sass');
 const concat = require('gulp-concat');
+const minify = require('gulp-minify');
 
 /* Tasks */
 gulp.task('sass', () => {
@@ -14,6 +15,15 @@ gulp.task('script', () => {
   return gulp
     .src('source/renderer/*')
     .pipe(concat('script.js'))
+    .pipe(
+      minify({
+        ext: {
+          src: '-debug.js',
+          min: '.js'
+        },
+        noSource: true
+      })
+    )
     .pipe(gulp.dest('./assets/'));
 });
 
