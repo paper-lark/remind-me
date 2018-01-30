@@ -1,0 +1,264 @@
+/* Imports */
+@import 'colors';
+@import 'variables';
+@import 'window';
+
+/* Mixins */
+@mixin container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  outline: none;
+}
+
+@mixin entry {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+@mixin unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+/* Containers */
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-container {
+  @include container;
+  -webkit-app-region: drag;
+  width: 100vw;
+  height: $header-height;
+  background: $background-color;
+  .title {
+    @include unselectable;
+    color: $text-color;
+    font: normal 400 $header-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+  }
+}
+
+.tab-container {
+  @include container;
+  width: 100vw;
+  flex-direction: row;
+  align-items: stretch;
+  .tab {
+    @include unselectable;
+    margin: 0 -1px 0 -1px;
+    padding: $tab-text-padding;
+    background: $tab-color;
+    flex: 1;
+    border: 1px solid $border-color;
+    color: $text-color;
+    box-shadow: inset 0 -1px 1px 0 rgba($shadow-color, 0.25);
+    font: normal 300 $tab-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+  }
+  .active {
+    background: $container-color;
+    border-bottom: none;
+    box-shadow: 0 0 1px 1px rgba($shadow-color, 0.25);
+    z-index: 1;
+  }
+}
+
+.main-container {
+  @include container;
+  z-index: 1;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: $container-color;
+  flex: 1;
+}
+
+.scrollable-container {
+  @include container;
+  display: block;
+  flex: 1;
+  height: 0;
+  overflow-y: scrollbar;
+  overflow-x: hidden;
+  border-top: 1px solid $border-color;
+
+  ::after {
+    height: 5rem;
+    width: 100%;
+  }
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $filter-color;
+  border-radius: $filter-height / 2;
+  border: 1px solid $border-color;
+  height: $filter-height;
+  width: calc(100vw - #{2 * map-get($filter-margin, 'horizontal')});
+  margin: map-get($filter-margin, 'vertical') map-get($filter-margin, 'horizontal');
+
+  .filter-icon {
+    width: $filter-icon-size;
+    height: $filter-icon-size;
+    margin: 0 $filter-icon-margin 0 $filter-icon-margin * 1.5;
+    background-size: contain;
+    background-image: url('./icons/filter.svg');
+  }
+  .filter {
+    flex: 1;
+    border-top-right-radius: $filter-height / 2;
+    border-bottom-right-radius: $filter-height / 2;
+    border: none;
+    outline: none;
+    height: $filter-height;
+    border-left: 1px solid $border-color;
+    padding: 0 $filter-text-padding;
+    color: $filter-text-color;
+    font: normal 300 $filter-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+    background: $filter-color;
+  }
+}
+
+/* Entry container */
+.entry-container {
+  @include container;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  border-bottom: 1px solid $border-color;
+  padding: $entry-spacing $entry-container-padding;
+  box-sizing: border-box;
+
+  /* Editing style */
+  white-space:pre-wrap;
+  font: normal 300 $entry-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+
+  /* Icons */
+  .check {
+    width: $subentry-font-size;
+    height: $subentry-font-size;
+  }
+  .selected-icon {
+    background-size: contain;
+    background-image: url('./icons/tick.svg');
+  }
+  .unselected-icon {
+    background-size: contain;
+    background-image: url('./icons/box.svg');
+  }
+
+  /* Content */
+  .content {
+    margin: 0 $content-margin;
+    flex: 1;
+    overflow-wrap: break-word;
+  }
+
+  /* Main entry */
+  .entry {
+    @include entry;
+    padding-bottom: $entry-spacing;
+    font: normal 300 $entry-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+  }
+
+  /* Sub-entry */
+  .sub-entry {
+    @include entry;
+    padding: $entry-spacing 0 $entry-spacing $subentry-padding;
+    font: normal 300 $subentry-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+  }
+
+  .footer {
+    @include entry;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+    .badge {
+      @include unselectable;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $badge-color;
+      color: $badge-text-color;
+      padding: 0 $badge-padding;
+      margin: $footer-spacing;
+      height: $badge-height;
+      font: normal 300 $badge-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+      border: 1px solid $border-color;
+      border-radius: $badge-height / 2;
+    }
+    .time {
+      @include unselectable;
+      margin: $footer-spacing;
+      color: $muted-text-color;
+      font: italic 300 $time-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+    }
+  }
+
+}
+
+/* Notification area */
+.notification {
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: $notification-padding;
+  color: $notification-text-color;
+  z-index: 99;
+  transform: translateY(100%);
+  font: normal 300 $notification-font-size $primary-mac-font, $primary-win-font, $substitute-font;
+  transition: transform .5s ease-in-out;
+}
+.notification.success {
+  background: $success-color;
+}
+.notification.info {
+  background: $info-color;
+}
+.notification.warning {
+  background: $warning-color;
+}
+.notification.error {
+  background: $error-color;
+}
+
+
+/* Floating action button */
+.floating {
+  z-index: 100;
+  outline: none;
+  border: none;
+  width: $floating-size;
+  height: $floating-size;
+  border-radius: $floating-size / 2;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $floating-button-color;
+  box-shadow: 0 0 3px 2px rgba($shadow-color, 0.4);
+  right: $button-offset;
+  bottom: $button-offset;
+  .add-icon {
+    width: $floating-icon-size;
+    height: $floating-icon-size;
+    background-size: contain;
+    background-image: url('./icons/add.svg');
+  }
+}

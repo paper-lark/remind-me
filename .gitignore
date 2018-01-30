@@ -1,0 +1,14 @@
+# FS files
+**/.DS_Store
+
+# Modules
+node_modules/
+
+# Environmental variables
+.env
+
+# Sass cache
+.sass-cache
+
+# Build
+dist/

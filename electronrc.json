@@ -1,0 +1,41 @@
+{
+  "appId": "com.paperlark.remind-me",
+  "productName": "Remind Me",
+  "copyright": "Copyright © 2018 Max Zhuravsky",
+  "files": [
+    "**/*", "!styles/**", "!icons/**", "!dist/**", "!Gulpfile.js", "!TODO.md", "!docs/**"
+  ],
+  "mac": {
+    "category": "public.app-category.productivity",
+    "target": "dmg",
+    "icon": "build/icon.icns"
+  },
+  "dmg": {
+    "title": "${productName}",
+    "contents": [
+      {
+        "x": 50,
+        "y": 150
+      },
+      {
+        "x": 410,
+        "y": 150,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ]
+  },
+  "win": {
+    "icon": "build/icon.ico",
+    "target": "nsis"
+  },
+  "nsis": {
+    "oneClick": true,
+    "installerIcon": "build/icon.ico",
+    "installerLanguages": "en_US",
+    "runAfterFinish": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Remind Me"
+  }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../assets/style.css" rel="stylesheet" type="text/css">
+  <title>Remind Me</title>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header-container">
+    <h1 class="title">Remind Me</h1>
+  </div>
+  <!-- Tabs -->
+  <div class="tab-container">
+    <div class="tab active" data-type="ongoing">Ongoing</div>
+    <div class="tab" data-type="completed">Completed</div>
+    <div class="tab" data-type="expired">Expired</div>
+    <div class="tab" data-type="unscheduled">Unscheduled</div>
+  </div>
+  <!-- Main area -->
+  <div class="main-container">
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <i class="filter-icon"></i>
+      <input type="text" id="filter" class="filter">
+    </div>
+    <!-- Scrollable container for notes -->
+    <div class="scrollable-container">
+
+      <!-- Note -->
+      <div class="entry-container" data-type="unscheduled" data-tag="personal">
+        <div class="entry">
+          <i class="check unselected-icon"></i>
+          <span class="content">Clean the house</span>
+        </div>
+        <div class="sub-entry">
+          <i class="check selected-icon"></i>
+          <span class="content">Wash the floor</span>
+        </div>
+        <div class="sub-entry">
+          <i class="check unselected-icon"></i>
+          <span class="content">Vacuum-clean the carpets</span>
+        </div>
+        <div class="footer">
+          <div class="badge" style="background: #AA00FF">Personal</div>
+          <div class="time"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="notification success">Hello world</div>
+  <button class="floating">
+    <i class="add-icon"></i>
+  </button>
+</body>
+<script src="../assets/script.js"></script>
+</html>

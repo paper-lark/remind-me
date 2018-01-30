@@ -1,0 +1,40 @@
+/* Fonts */
+$primary-mac-font: 'Helvetica Neue';
+$primary-win-font: 'Segoe UI';
+$substitute-font: 'sans-serif';
+$header-font-size: .8rem;
+$tab-font-size: .9rem;
+$filter-font-size: 1rem;
+$entry-font-size: 1rem;
+$subentry-font-size: .9rem;
+$badge-font-size: .75rem;
+$time-font-size: .9rem;
+$notification-font-size: 1rem;
+
+/* Padding */
+$tab-text-padding: .5rem;
+$entry-container-padding: .5rem;
+$subentry-padding: .75rem;
+$badge-padding: .5rem;
+$button-offset: 1rem;
+$notification-padding: .5rem;
+
+/* Margin */
+$filter-margin: (
+  'vertical': 1rem,
+  'horizontal': 1.5rem
+);
+$content-margin: .5rem;
+$entry-spacing: .25rem;
+$footer-margin: .5rem;
+$footer-spacing: .5rem;
+$filter-text-padding: .5rem;
+$filter-icon-margin: .4rem;
+
+/* Size */
+$header-height: 2.25rem;
+$filter-height: 1.75rem;
+$badge-height: 1.2rem;
+$floating-size: 3rem;
+$floating-icon-size: 1.2rem;
+$filter-icon-size: 1.4rem;
