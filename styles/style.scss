@@ -23,10 +23,9 @@
 }
 
 @mixin unselectable {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
 }
 
 /* Containers */
@@ -44,7 +43,7 @@ body {
   background: $background-color;
   .title {
     @include unselectable;
-    color: $text-color;
+    color: $header-color;
     font: normal 400 $header-font-size $primary-mac-font, $primary-win-font, $substitute-font;
   }
 }
@@ -57,18 +56,19 @@ body {
   .tab {
     @include unselectable;
     margin: 0 -1px 0 -1px;
+    text-align: center;
     padding: $tab-text-padding;
     background: $tab-color;
     flex: 1;
     border: 1px solid $border-color;
     color: $text-color;
-    box-shadow: inset 0 -1px 1px 0 rgba($shadow-color, 0.25);
+    box-shadow: inset 0 -1px 1px 0 rgba($shadow-color, 0.4);
     font: normal 300 $tab-font-size $primary-mac-font, $primary-win-font, $substitute-font;
   }
   .active {
     background: $container-color;
     border-bottom: none;
-    box-shadow: 0 0 1px 1px rgba($shadow-color, 0.25);
+    box-shadow: 0 0 1px 1px rgba($shadow-color, 0.4);
     z-index: 1;
   }
 }
@@ -260,5 +260,46 @@ body {
     height: $floating-icon-size;
     background-size: contain;
     background-image: url('./icons/add.svg');
+  }
+}
+
+/* Control buttons */
+.controls-container {
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+
+  .controls {
+    -webkit-app-region: no-drag;
+    width: $controls-width;
+    height: $controls-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      -webkit-app-region: no-drag;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: $controls-icon-size;
+      height: $controls-icon-size;
+    }
+    .minimize-icon {
+      background-image: url('./icons/minimize.svg');
+    }
+    .expand-icon {
+      background-image: url('./icons/expand.svg');
+    }
+    .close-icon {
+      background-image: url('./icons/close.svg');
+    }
+  }
+  .controls:hover {
+    background: $controls-hover-color;
   }
 }

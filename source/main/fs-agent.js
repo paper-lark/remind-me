@@ -5,7 +5,6 @@
 /* Imports */
 const fs = require('fs');
 const path = require('path');
-const os = require('os');
 
 /* App info */
 const colorname = 'colors.json';
@@ -17,10 +16,13 @@ const folder = 'remind-me';
  * Required application directories are created if they are not present.
  */
 function resolve() {
-  if (os.platform() === 'darwin') {
+  if (process.platform === 'darwin') {
     /* macOS */
+    if (process.env.HOME == undefined) {
+      throw new Error('Folder for local data not found');
+    }
     let pathname = path.join(
-      os.homedir(),
+      process.env.HOME,
       'Library',
       'Application Support',
       folder
@@ -30,9 +32,12 @@ function resolve() {
     }
     console.log(`> path chosen: ${pathname}`);
     return pathname;
-  } else if (os.platform() === 'win32') {
+  } else if (process.platform === 'win32') {
     /* Windows */
-    let pathname = path.join(os.homedir(), '\\AppData\\Roaming\\', folder);
+    if (process.env.APPDATA == undefined) {
+      throw new Error('Folder for local data not found');
+    }
+    let pathname = path.join(process.env.APPDATA, folder);
     if (!fs.existsSync(pathname)) {
       fs.mkdirSync(pathname);
     }
@@ -131,10 +136,11 @@ function fetchColors() {
     let file = path.join(pathname, colorname);
     if (!fs.existsSync(file)) {
       let data = {
+        general: '#2979FF',
         home: '#AA00FF',
         work: '#FF6D00',
         personal: '#388E3C',
-        project: '#0091EA'
+        project: '#3D5AFE'
       };
       fs.writeFileSync(file, JSON.stringify(data), {
         encoding: 'utf-8',

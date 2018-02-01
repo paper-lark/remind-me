@@ -297,6 +297,16 @@ function IPCHandlerFactory() {
     openTab(reminder.getAttribute('data-type'));
   });
 
+  function minimize() {
+    ipcRenderer.send('minimize-window');
+  }
+  function expand() {
+    ipcRenderer.send('expand-window');
+  }
+  function close() {
+    ipcRenderer.send('close-window');
+  }
+
   /* Receive notifications */
   ipcRenderer.on('notify', (event, args) => {
     notify(args);
@@ -310,7 +320,10 @@ function IPCHandlerFactory() {
   return {
     fetch: fetch,
     save: save,
-    remind: remind
+    remind: remind,
+    minimize: minimize,
+    close: close,
+    expand: expand
   };
 }
 
@@ -349,6 +362,7 @@ function checkRoutine() {
 
 /* Initialize view */
 function init() {
+  createCustomControls();
   ipc.fetch();
   checkRoutine();
 }

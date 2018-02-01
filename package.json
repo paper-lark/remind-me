@@ -1,6 +1,6 @@
 {
   "name": "remind-me",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "Simplistic cross-platform note tracker",
   "main": "./source/main/main.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "build:test": "yarn run electron-builder --dir --config electronrc.json",
     "build:mac": "yarn run electron-builder --config electronrc.json --mac",
     "build:windows": "yarn run electron-builder --config electronrc.json --win",
-    "build": "yarn run electron-builder --config electronrc.json --mac --win --x64"
+    "build": "yarn run electron-builder --config electronrc.json --mac --win"
   },
   "author": "Max Zhuravsky <paperlark@yandex.com",
   "license": "MIT",

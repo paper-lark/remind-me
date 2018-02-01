@@ -58,8 +58,22 @@ function initIPC() {
         sender.send('scroll', arg.id);
       });
       notification.show();
-      //TODO: add click handler
     }
+  });
+
+  /* Minimize */
+  ipcMain.on('minimize-window', () => {
+    windows.main.minimize();
+  });
+
+  /* Expand */
+  ipcMain.on('expand-window', () => {
+    windows.main.setFullScreen(!windows.main.isFullScreen());
+  });
+
+  /* Close */
+  ipcMain.on('close-window', () => {
+    windows.main.close();
   });
 }
 
@@ -90,7 +104,5 @@ app.on('activate', () => {
   }
 });
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });

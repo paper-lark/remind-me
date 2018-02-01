@@ -39,18 +39,13 @@ body {
   -webkit-app-region: drag;
   width: 100vw;
   height: 2.25rem;
-  background: #E0E0E0; }
+  background: #212121; }
   .header-container .title {
     -webkit-user-select: none;
-    /* Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE10+/Edge */
     user-select: none;
-    /* Standard */
-    color: #212121;
-    font: normal 400 0.8rem "Helvetica Neue", "Segoe UI", "sans-serif"; }
+    cursor: default;
+    color: #FFFFFF;
+    font: normal 400 0.7rem "Helvetica Neue", "Segoe UI", "sans-serif"; }
 
 .tab-container {
   display: flex;
@@ -65,25 +60,21 @@ body {
   align-items: stretch; }
   .tab-container .tab {
     -webkit-user-select: none;
-    /* Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE10+/Edge */
     user-select: none;
-    /* Standard */
+    cursor: default;
     margin: 0 -1px 0 -1px;
-    padding: 0.5rem;
-    background: #EEEEEE;
+    text-align: center;
+    padding: 0.3rem;
+    background: #BDBDBD;
     flex: 1;
-    border: 1px solid #424242;
+    border: 1px solid #212121;
     color: #212121;
-    box-shadow: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
     font: normal 300 0.9rem "Helvetica Neue", "Segoe UI", "sans-serif"; }
   .tab-container .active {
     background: #FAFAFA;
     border-bottom: none;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.4);
     z-index: 1; }
 
 .main-container {
@@ -114,7 +105,7 @@ body {
   height: 0;
   overflow-y: scrollbar;
   overflow-x: hidden;
-  border-top: 1px solid #424242; }
+  border-top: 1px solid #212121; }
   .scrollable-container ::after {
     height: 5rem;
     width: 100%; }
@@ -126,7 +117,7 @@ body {
   align-items: center;
   background: #E0E0E0;
   border-radius: 0.875rem;
-  border: 1px solid #424242;
+  border: 1px solid #212121;
   height: 1.75rem;
   width: calc(100vw - 3rem);
   margin: 1rem 1.5rem; }
@@ -143,7 +134,7 @@ body {
     border: none;
     outline: none;
     height: 1.75rem;
-    border-left: 1px solid #424242;
+    border-left: 1px solid #212121;
     padding: 0 0.5rem;
     color: #000000;
     font: normal 300 1rem "Helvetica Neue", "Segoe UI", "sans-serif";
@@ -161,7 +152,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  border-bottom: 1px solid #424242;
+  border-bottom: 1px solid #212121;
   padding: 0.25rem 0.5rem;
   box-sizing: border-box;
   /* Editing style */
@@ -213,13 +204,8 @@ body {
     justify-content: space-between; }
     .entry-container .footer .badge {
       -webkit-user-select: none;
-      /* Safari */
-      -moz-user-select: none;
-      /* Firefox */
-      -ms-user-select: none;
-      /* IE10+/Edge */
       user-select: none;
-      /* Standard */
+      cursor: default;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -229,17 +215,12 @@ body {
       margin: 0.5rem;
       height: 1.2rem;
       font: normal 300 0.75rem "Helvetica Neue", "Segoe UI", "sans-serif";
-      border: 1px solid #424242;
+      border: 1px solid #212121;
       border-radius: 0.6rem; }
     .entry-container .footer .time {
       -webkit-user-select: none;
-      /* Safari */
-      -moz-user-select: none;
-      /* Firefox */
-      -ms-user-select: none;
-      /* IE10+/Edge */
       user-select: none;
-      /* Standard */
+      cursor: default;
       margin: 0.5rem;
       color: #616161;
       font: italic 300 0.9rem "Helvetica Neue", "Segoe UI", "sans-serif"; }
@@ -290,3 +271,36 @@ body {
     height: 1.2rem;
     background-size: contain;
     background-image: url("./icons/add.svg"); }
+
+/* Control buttons */
+.controls-container {
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100; }
+  .controls-container .controls {
+    -webkit-app-region: no-drag;
+    width: 2.8rem;
+    height: 1.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .controls-container .controls i {
+      -webkit-app-region: no-drag;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 0.9rem;
+      height: 0.9rem; }
+    .controls-container .controls .minimize-icon {
+      background-image: url("./icons/minimize.svg"); }
+    .controls-container .controls .expand-icon {
+      background-image: url("./icons/expand.svg"); }
+    .controls-container .controls .close-icon {
+      background-image: url("./icons/close.svg"); }
+  .controls-container .controls:hover {
+    background: #757575; }

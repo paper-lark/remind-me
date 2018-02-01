@@ -17,11 +17,11 @@ gulp.task('script', () => {
     .pipe(concat('script.js'))
     .pipe(
       minify({
+        noSource: true,
         ext: {
-          src: '-debug.js',
-          min: '.js'
-        },
-        noSource: true
+          src: '.js',
+          min: '.min.js'
+        }
       })
     )
     .pipe(gulp.dest('./assets/'));

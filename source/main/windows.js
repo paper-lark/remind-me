@@ -22,6 +22,7 @@ function createMainWindow() {
     minHeight: 600,
     backgroundColor: '#FFFFFF',
     title: 'Remind Me.app',
+    show: false,
     frame: process.platform === 'darwin',
     transparent: process.platform === 'darwin',
     titleBarStyle: 'hiddenInset'
