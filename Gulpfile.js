@@ -17,7 +17,6 @@ gulp.task('script', () => {
     .pipe(concat('script.js'))
     .pipe(
       minify({
-        noSource: true,
         ext: {
           src: '.js',
           min: '.min.js'

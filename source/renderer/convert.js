@@ -19,6 +19,14 @@ function toText(node) {
     text += ' ' + entry.querySelector('.content').textContent;
     return text;
   }
+
+  function format(number) {
+    if (number < 10) {
+      return `0${number}`;
+    } else {
+      return `${number}`;
+    }
+  }
   result += entryToText(main) + '\n';
 
   subs.forEach(sub => {
@@ -33,7 +41,9 @@ function toText(node) {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    result += ` - ${month}/${day}/${year} ${hour}:${minute}`;
+    result += ` - ${format(month)}/${format(day)}/${year} ${format(
+      hour
+    )}:${format(minute)}`;
   }
 
   return result;

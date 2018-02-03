@@ -6,7 +6,6 @@
  */
 
 function createCustomControls() {
-  console.log(`> platform: ${process.platform}`);
   if (process.platform !== 'darwin') {
     let buttons = document.createElement('div');
     buttons.className = 'controls-container';
