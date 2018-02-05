@@ -43,6 +43,14 @@ function resolve() {
     }
     console.log(`> path chosen: ${pathname}`);
     return pathname;
+  } else if (process.platform === 'linux') {
+    /* Linux */
+    let pathname = path.join(process.env.HOME, `.${folder}`);
+    if (!fs.existsSync(pathname)) {
+      fs.mkdirSync(pathname);
+    }
+    console.log(`> path chosen: ${pathname}`);
+    return pathname;
   } else {
     /* Unsupported platform */
     throw new Error('Unsupported OS detected');
